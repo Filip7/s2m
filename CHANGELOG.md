@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.4.0](https://github.com/Filip7/s2m/compare/v0.3.0...v0.4.0) (2025-08-10)
+
+
+### Features
+
+* ignore non inserts ([45424ed](https://github.com/Filip7/s2m/commit/45424ed7f7a528a31d9ae53d497e0298345aa1e5))
+
 ## [0.3.0](https://github.com/Filip7/s2m/compare/v0.2.0...v0.3.0) (2025-08-10)
 
 
