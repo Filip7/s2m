@@ -24,6 +24,6 @@ Examples from this stack overflow [question](https://stackoverflow.com/a/2816801
 ## Do I need this?
 
 Actually no, if you use Intellij/DataGrip or any other Jetbrains IDE, the IDE can do that for you.  
-If you are using pg_dump to generate an sql dump, and want to speed up the queries by turning them into multi line insets, then just define rows per insert flag `--rows-per-insert=100` <- insert number that works for your use case.
+If you are using pg_dump to generate an sql dump, and want to speed up the queries by turning them into multi line inserts, then just define rows per insert flag `--rows-per-insert=100` <- insert number that works for your use case.
 
 Read more here [https://www.postgresql.org/docs/current/app-pgdump.html](https://www.postgresql.org/docs/current/app-pgdump.html)
