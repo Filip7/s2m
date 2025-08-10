@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.3.0](https://github.com/Filip7/s2m/compare/v0.2.0...v0.3.0) (2025-08-10)
+
+
+### Features
+
+* handle inserts to different tables ([9ea7774](https://github.com/Filip7/s2m/commit/9ea777410028b57081a8ea8e2400b56da6cbd58b))
+
 ## [0.2.0](https://github.com/Filip7/s2m/compare/v0.1.0...v0.2.0) (2025-08-10)
 
 
