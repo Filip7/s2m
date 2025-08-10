@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.5.0](https://github.com/Filip7/s2m/compare/v0.4.0...v0.5.0) (2025-08-10)
+
+
+### Features
+
+* get SQL from standard input ([6845f0f](https://github.com/Filip7/s2m/commit/6845f0f804be40e71c2cecbb135dc530fd53249c))
+
 ## [0.4.0](https://github.com/Filip7/s2m/compare/v0.3.0...v0.4.0) (2025-08-10)
 
 
