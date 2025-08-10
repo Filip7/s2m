@@ -1,7 +1,7 @@
 # s2m
 
 > [!WARNING]
-> Work in progress, currently this does not work
+> Work in progress, currently this works on the most basic of examples!
 
 Single to multi line SQL
 
@@ -9,10 +9,10 @@ Goal of this project is to turn this
 
 ```sql
 INSERT INTO films (code, title, did, date_prod, kind) VALUES ('B6717', 'Tampopo', 110, '1985-02-10', 'Comedy');
-INSERT INTO films ('HG120', 'The Dinner Game', 140, DEFAULT, 'Comedy');
+INSERT INTO films (code, title, did, date_prod, kind) VALUES ('HG120', 'The Dinner Game', 140, DEFAULT, 'Comedy');
 ```
 
-to this
+To this
 
 ```sql
 INSERT INTO films (code, title, did, date_prod, kind) VALUES ('B6717', 'Tampopo', 110, '1985-02-10', 'Comedy'),
