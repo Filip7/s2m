@@ -25,22 +25,37 @@ func convertSingleLineToMultilineSQL(input string) string {
 	// (.*) -> match everything inside '(' and ')'
 	r := regexp.MustCompile(`(?i)insert into \w+(.*) values `)
 	match := r.FindAllString(lines[0], -1)
+	match1 := match[0]
 
+	isFirst := 0
 	for i := range len(lines) {
+		match = r.FindAllString(lines[i], -1)
+		match2 := match[0]
+		if match1 != match2 {
+			isFirst = 0
+		}
 		if i != len(lines)-1 {
 			lines[i] += ","
 		} else {
 			lines[i] += ";"
 		}
 
-		if i != 0 {
+		// if new insert block, replace prev ',' with ';'
+		if i != len(lines)-1 && isFirst == 0 && i != 0 {
+			lines[i-1] = strings.TrimRight(lines[i-1], ",")
+			lines[i-1] += ";"
+		}
+
+		if isFirst != 0 {
 			// remove the insert part and replace it with nothing
-			lines[i] = strings.Replace(lines[i], match[0], "", 1)
+			lines[i] = strings.Replace(lines[i], match2, "", 1)
 			// remove the starting newline char that we got at the begining by spliting at ;
 			lines[i] = strings.Replace(lines[i], "\n", "", 1)
 			// return newline char and add spaces for the len of insert part, to pretify the output
-			lines[i] = "\n" + strings.Repeat(" ", len(match[0])) + lines[i]
+			lines[i] = "\n" + strings.Repeat(" ", len(match2)) + lines[i]
 		}
+		match1 = match2
+		isFirst += 1
 	}
 
 	return strings.Join(lines, "")

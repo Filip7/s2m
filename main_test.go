@@ -11,11 +11,36 @@ func Test_convertSingleLineToMultilineSQL(t *testing.T) {
 		input string
 		want  string
 	}{
-		{"First use case",
-`INSERT INTO films (code, title, did, date_prod, kind) VALUES ('B6717', 'Tampopo', 110, '1985-02-10', 'Comedy');
+		{
+			"Simple use case",
+			`INSERT INTO films (code, title, did, date_prod, kind) VALUES ('B6717', 'Tampopo', 110, '1985-02-10', 'Comedy');
 INSERT INTO films (code, title, did, date_prod, kind) VALUES ('HG120', 'The Dinner Game', 140, DEFAULT, 'Comedy');`,
-`INSERT INTO films (code, title, did, date_prod, kind) VALUES ('B6717', 'Tampopo', 110, '1985-02-10', 'Comedy'),
+			`INSERT INTO films (code, title, did, date_prod, kind) VALUES ('B6717', 'Tampopo', 110, '1985-02-10', 'Comedy'),
                                                              ('HG120', 'The Dinner Game', 140, DEFAULT, 'Comedy');`,
+		},
+		{
+			"Different tables use case",
+			`INSERT INTO films (code, title, did, date_prod, kind) VALUES ('B6717', 'Tampopo', 110, '1985-02-10', 'Comedy');
+INSERT INTO films (code, title, did, date_prod, kind) VALUES ('HG120', 'The Dinner Game', 140, DEFAULT, 'Comedy');
+INSERT INTO films2 (code, title, did, date_prod, kind) VALUES ('B6717', 'Tampopo', 110, '1985-02-10', 'Comedy');
+INSERT INTO films2 (code, title, did, date_prod, kind) VALUES ('HG120', 'The Dinner Game', 140, DEFAULT, 'Comedy');`,
+			`INSERT INTO films (code, title, did, date_prod, kind) VALUES ('B6717', 'Tampopo', 110, '1985-02-10', 'Comedy'),
+                                                             ('HG120', 'The Dinner Game', 140, DEFAULT, 'Comedy');
+INSERT INTO films2 (code, title, did, date_prod, kind) VALUES ('B6717', 'Tampopo', 110, '1985-02-10', 'Comedy'),
+                                                              ('HG120', 'The Dinner Game', 140, DEFAULT, 'Comedy');`,
+		},
+		{
+			"Two multi, one single in the middle",
+			`INSERT INTO films (code, title, did, date_prod, kind) VALUES ('B6717', 'Tampopo', 110, '1985-02-10', 'Comedy');
+INSERT INTO films (code, title, did, date_prod, kind) VALUES ('HG120', 'The Dinner Game', 140, DEFAULT, 'Comedy');
+INSERT INTO test (code, title, did, date_prod, kind) VALUES ('B6717', 'Tampopo', 110, '1985-02-10', 'Comedy');
+INSERT INTO films2 (code, title, did, date_prod, kind) VALUES ('B6717', 'Tampopo', 110, '1985-02-10', 'Comedy');
+INSERT INTO films2 (code, title, did, date_prod, kind) VALUES ('HG120', 'The Dinner Game', 140, DEFAULT, 'Comedy');`,
+			`INSERT INTO films (code, title, did, date_prod, kind) VALUES ('B6717', 'Tampopo', 110, '1985-02-10', 'Comedy'),
+                                                             ('HG120', 'The Dinner Game', 140, DEFAULT, 'Comedy');
+INSERT INTO test (code, title, did, date_prod, kind) VALUES ('B6717', 'Tampopo', 110, '1985-02-10', 'Comedy');
+INSERT INTO films2 (code, title, did, date_prod, kind) VALUES ('B6717', 'Tampopo', 110, '1985-02-10', 'Comedy'),
+                                                              ('HG120', 'The Dinner Game', 140, DEFAULT, 'Comedy');`,
 		},
 	}
 	for _, tt := range tests {
