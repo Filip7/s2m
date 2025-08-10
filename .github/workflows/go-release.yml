@@ -1,4 +1,4 @@
-name: release-please
+name: create go binaries
 on:
   release:
     types:
