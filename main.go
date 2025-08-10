@@ -1,6 +1,7 @@
 package main
 
 import (
+	"flag"
 	"fmt"
 	"regexp"
 	"strings"
@@ -74,12 +75,11 @@ func convertSingleLineToMultilineSQL(input string) string {
 }
 
 func main() {
-	input := `INSERT INTO films (code, title, did, date_prod, kind) VALUES ('B6717', 'Tampopo', 110, '1985-02-10', 'Comedy');
-INSERT INTO films (code, title, did, date_prod, kind) VALUES ('HG120', 'The Dinner Game', 140, DEFAULT, 'Comedy');
-INSERT INTO films (code, title, did, date_prod, kind) VALUES ('HG121', 'The Dinner Game', 141, DEFAULT, 'Comedy');
-INSERT INTO films (code, title, did, date_prod, kind) VALUES ('HG122', 'The Dinner Game', 142, DEFAULT, 'Comedy');
-INSERT INTO films (code, title, did, date_prod, kind) VALUES ('HG123', 'The Dinner Game', 142, DEFAULT, 'Comedy');`
-	output := convertSingleLineToMultilineSQL(input)
+	flag.Parse()
+
+	args := flag.Args()
+	sqlInput := args[len(args)-1]
+	output := convertSingleLineToMultilineSQL(sqlInput)
 
 	fmt.Println(output)
 }
