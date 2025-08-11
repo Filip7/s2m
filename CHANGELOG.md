@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.6.0](https://github.com/Filip7/s2m/compare/v0.5.0...v0.6.0) (2025-08-11)
+
+
+### Features
+
+* reduce regex usage ([f1ab2f4](https://github.com/Filip7/s2m/commit/f1ab2f4a2449ecadf99400b824cacd38e44cb123))
+
 ## [0.5.0](https://github.com/Filip7/s2m/compare/v0.4.0...v0.5.0) (2025-08-10)
 
 
