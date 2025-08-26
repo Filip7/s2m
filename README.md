@@ -35,6 +35,13 @@ INSERT into mail(id) values (1); \
 INSERT into mail(id) values (2)"
 ```
 
+Tool supports reading files and printing output to standard out.  
+Use it like this:
+
+```sh
+./s2m -f export.sql
+```
+
 ## Do I need this?
 
 Actually no, if you use Intellij/DataGrip or any other Jetbrains IDE, the IDE can do that for you.  
