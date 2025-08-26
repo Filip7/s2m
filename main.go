@@ -7,21 +7,27 @@ import (
 )
 
 func parseFlags() {
-	flag.StringVar(&commandLineArgs.fileName, "f", "", "Define file to read")
+	flag.StringVar(&cmdLineArgs.fileName, "f", "", "Define file to read")
 	flag.Parse()
 }
 
 func main() {
 	parseFlags()
 
-	if commandLineArgs.fileName != "" {
-		fmt.Println("This is still work in progress: " + commandLineArgs.fileName)
+	if cmdLineArgs.fileName != "" {
+		out, err := readFile(cmdLineArgs.fileName)
+		if err != nil {
+			fmt.Println("error happened", err)
+			os.Exit(1)
+		}
+
+		fmt.Println(out)
 		os.Exit(0)
 	}
 
 	args := flag.Args()
 	sqlInput := args[len(args)-1]
-	output := convertSingleLineToMultilineSQL(sqlInput)
+	output := ConvertSingleLineToMultilineSQL(sqlInput)
 
 	fmt.Println(output)
 }

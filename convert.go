@@ -4,36 +4,69 @@ import (
 	"fmt"
 	"regexp"
 	"strings"
+	"unicode"
 )
 
 func removeEmptyStrings(s []string) []string {
 	var r []string
 	for _, str := range s {
 		if str != "" {
-			r = append(r, str)
+			r = append(r, strings.TrimLeftFunc(str, unicode.IsSpace))
 		}
 	}
 	return r
 }
 
-func addCorrectEnding(i int, lines []string, isFirst int) {
-	if i != len(lines)-1 {
-		lines[i] += ","
-	} else {
-		lines[i] += ";"
-	}
+func replaceLastRune(s string, new rune) string {
+	return s[:len(s)-2] + string(new)
+}
 
-	// if new insert block, replace prev ',' with ';'
-	if isFirst == 0 && i != 0 {
-		lines[i-1] = strings.TrimRight(lines[i-1], ",")
-		lines[i-1] += ";"
+func addCorrectEnding(i int, lines []string, isFirst int, fromFile bool) {
+	if fromFile {
+		if i != len(lines)-1 {
+			lines[i] = replaceLastRune(lines[i], ',')
+		} else {
+			lines[i] = replaceLastRune(lines[i], ';')
+		}
+
+		// if new insert block, replace prev ',' with ';'
+		if isFirst == 0 && i != 0 {
+			lines[i-1] = strings.TrimRight(lines[i-1], ",")
+			lines[i-1] += ";\n"
+		}
+	} else {
+		if i != len(lines)-1 {
+			lines[i] += ","
+		} else {
+			lines[i] += ";\n"
+		}
+
+		// if new insert block, replace prev ',' with ';'
+		if isFirst == 0 && i != 0 {
+			lines[i-1] = strings.TrimRight(lines[i-1], ",")
+			lines[i-1] += ";\n"
+		}
 	}
 }
 
-func convertSingleLineToMultilineSQL(input string) string {
+func ConvertSingleLineToMultilineSQL(input string) string {
 	lines := strings.Split(input, ";")
 	lines = removeEmptyStrings(lines)
 
+	convert(lines, false)
+
+	return strings.Join(lines, "")
+}
+
+func ConvertSingleLineToMultilineSQLFromFile(input []string) string {
+	input = removeEmptyStrings(input)
+
+	convert(input, true)
+
+	return strings.Join(input, "")
+}
+
+func convert(lines []string, fromFile bool) {
 	// (?i)  -> case insensitive
 	// (\w+) -> match word
 	// (.*)  -> match everything inside '(' and ')'
@@ -56,7 +89,7 @@ func convertSingleLineToMultilineSQL(input string) string {
 			if locatedTableName != table {
 				// if new table insert has been found
 				isFirst = 0
-				addCorrectEnding(i, lines, isFirst)
+				addCorrectEnding(i, lines, isFirst, fromFile)
 				insertMatch := r.FindStringSubmatch(lines[i])
 				match = insertMatch[0]
 				table = locatedTableName
@@ -66,11 +99,11 @@ func convertSingleLineToMultilineSQL(input string) string {
 		} else {
 			// is not an insert
 			isFirst = 0
-			addCorrectEnding(i, lines, isFirst)
+			addCorrectEnding(i, lines, isFirst, fromFile)
 			continue
 		}
 
-		addCorrectEnding(i, lines, isFirst)
+		addCorrectEnding(i, lines, isFirst, fromFile)
 
 		if isFirst != 0 {
 			// remove the insert part and replace it with nothing
@@ -82,6 +115,4 @@ func convertSingleLineToMultilineSQL(input string) string {
 		}
 		isFirst += 1
 	}
-
-	return strings.Join(lines, "")
 }
