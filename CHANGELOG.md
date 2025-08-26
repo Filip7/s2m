@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.7.0](https://github.com/Filip7/s2m/compare/v0.6.0...v0.7.0) (2025-08-26)
+
+
+### Features
+
+* support getting input from a file ([#22](https://github.com/Filip7/s2m/issues/22)) ([695f750](https://github.com/Filip7/s2m/commit/695f750da4807c2c7bcb646057f29fb34b8a3c0d))
+
 ## [0.6.0](https://github.com/Filip7/s2m/compare/v0.5.0...v0.6.0) (2025-08-11)
 
 
