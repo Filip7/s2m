@@ -51,15 +51,46 @@ SELECT * FROM films2;`,
 			`SELECT * FROM films;
 INSERT INTO films (code, title, did, date_prod, kind) VALUES ('B6717', 'Tampopo', 110, '1985-02-10', 'Comedy'),
                                                              ('HG120', 'The Dinner Game', 140, DEFAULT, 'Comedy');
-SELECT * FROM films2;`,
+SELECT * FROM films2;
+`,
+		},
+		{
+			"Handle same table that is interupted",
+			`SELECT * FROM films;
+INSERT INTO films (code, title, did, date_prod, kind) VALUES ('B6717', 'Tampopo', 110, '1985-02-10', 'Comedy');
+INSERT INTO films (code, title, did, date_prod, kind) VALUES ('HG120', 'The Dinner Game', 140, DEFAULT, 'Comedy');
+SELECT * FROM films2;
+INSERT INTO films (code, title, did, date_prod, kind) VALUES ('B6717', 'Tampopo', 110, '1985-02-10', 'Comedy');
+INSERT INTO films (code, title, did, date_prod, kind) VALUES ('HG120', 'The Dinner Game', 140, DEFAULT, 'Comedy');`,
+			`SELECT * FROM films;
+INSERT INTO films (code, title, did, date_prod, kind) VALUES ('B6717', 'Tampopo', 110, '1985-02-10', 'Comedy'),
+                                                             ('HG120', 'The Dinner Game', 140, DEFAULT, 'Comedy');
+SELECT * FROM films2;
+INSERT INTO films (code, title, did, date_prod, kind) VALUES ('B6717', 'Tampopo', 110, '1985-02-10', 'Comedy'),
+                                                             ('HG120', 'The Dinner Game', 140, DEFAULT, 'Comedy');`,
 		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			got := convertSingleLineToMultilineSQL(tt.input)
+			got := ConvertSingleLineToMultilineSQL(tt.input)
 			if got != tt.want {
 				t.Errorf("Expected\n\"%s\"\ngot\n\"%s\"", tt.want, got)
 			}
 		})
+	}
+}
+
+func TestConvertSingleLineToMultilineSQLFromFile(t *testing.T) {
+	expected := `SELECT * FROM films;
+INSERT INTO films (code, title, did, date_prod, kind) VALUES ('B6717', 'Tampopo', 110, '1985-02-10', 'Comedy'),
+                                                             ('HG120', 'The Dinner Game', 140, DEFAULT, 'Comedy');
+SELECT * FROM films2;`
+	out, err := readFile(".test.sql")
+	if err != nil {
+		t.Errorf("Error happened %s", err.Error())
+	}
+
+	if out != expected {
+		t.Errorf("Expected\n%s\ngot\n%s\n", expected, out)
 	}
 }

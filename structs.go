@@ -4,4 +4,4 @@ type CommandLineArgs struct {
 	fileName string
 }
 
-var commandLineArgs CommandLineArgs
+var cmdLineArgs CommandLineArgs
