@@ -49,21 +49,21 @@ func addCorrectEnding(i int, lines []string, isFirst int, fromFile bool) {
 	}
 }
 
-func ConvertSingleLineToMultilineSQL(input string) string {
+func ConvertSingleLineToMultilineSQL(input string) []string {
 	lines := strings.Split(input, ";")
 	lines = removeEmptyStrings(lines)
 
 	convert(lines, false)
 
-	return strings.Join(lines, "")
+	return lines
 }
 
-func ConvertSingleLineToMultilineSQLFromFile(input []string) string {
+func ConvertSingleLineToMultilineSQLFromFile(input []string) []string {
 	input = removeEmptyStrings(input)
 
 	convert(input, true)
 
-	return strings.Join(input, "")
+	return input
 }
 
 func convert(lines []string, fromFile bool) {
