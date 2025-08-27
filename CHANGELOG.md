@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.8.0](https://github.com/Filip7/s2m/compare/v0.7.0...v0.8.0) (2025-08-27)
+
+
+### Features
+
+* added command line flag to save output to a file ([#24](https://github.com/Filip7/s2m/issues/24)) ([cdd97fd](https://github.com/Filip7/s2m/commit/cdd97fde9c7a58112ebc5ad796945a114dccb774))
+
 ## [0.7.0](https://github.com/Filip7/s2m/compare/v0.6.0...v0.7.0) (2025-08-26)
 
 
