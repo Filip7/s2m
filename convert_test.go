@@ -1,6 +1,7 @@
 package main
 
 import (
+	"strings"
 	"testing"
 )
 
@@ -72,7 +73,8 @@ INSERT INTO films (code, title, did, date_prod, kind) VALUES ('B6717', 'Tampopo'
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			got := ConvertSingleLineToMultilineSQL(tt.input)
+			converted := ConvertSingleLineToMultilineSQL(tt.input)
+			got := strings.Join(converted, "")
 			if got != tt.want {
 				t.Errorf("Expected\n\"%s\"\ngot\n\"%s\"", tt.want, got)
 			}
@@ -85,7 +87,8 @@ func TestConvertSingleLineToMultilineSQLFromFile(t *testing.T) {
 INSERT INTO films (code, title, did, date_prod, kind) VALUES ('B6717', 'Tampopo', 110, '1985-02-10', 'Comedy'),
                                                              ('HG120', 'The Dinner Game', 140, DEFAULT, 'Comedy');
 SELECT * FROM films2;`
-	out, err := readFile(".test.sql")
+	read, err := readFile(".test.sql")
+	out := strings.Join(ConvertSingleLineToMultilineSQLFromFile(read), "")
 	if err != nil {
 		t.Errorf("Error happened %s", err.Error())
 	}

@@ -1,7 +1,8 @@
 package main
 
 type CommandLineArgs struct {
-	fileName string
+	fileName       string
+	outputFileName string
 }
 
 var cmdLineArgs CommandLineArgs

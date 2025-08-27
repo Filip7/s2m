@@ -4,10 +4,12 @@ import (
 	"flag"
 	"fmt"
 	"os"
+	"strings"
 )
 
 func parseFlags() {
 	flag.StringVar(&cmdLineArgs.fileName, "f", "", "Define file to read")
+	flag.StringVar(&cmdLineArgs.outputFileName, "o", "", "Define file to save the output to")
 	flag.Parse()
 }
 
@@ -21,13 +23,23 @@ func main() {
 			os.Exit(1)
 		}
 
-		fmt.Println(out)
+		converted := ConvertSingleLineToMultilineSQLFromFile(out)
+		if cmdLineArgs.outputFileName != "" {
+			saveToFile(cmdLineArgs.outputFileName, converted)
+		} else {
+			fmt.Println(strings.Join(converted, ""))
+		}
 		os.Exit(0)
 	}
 
 	args := flag.Args()
 	sqlInput := args[len(args)-1]
-	output := ConvertSingleLineToMultilineSQL(sqlInput)
+	converted := ConvertSingleLineToMultilineSQL(sqlInput)
 
-	fmt.Println(output)
+	if cmdLineArgs.outputFileName != "" {
+		saveToFile(cmdLineArgs.outputFileName, converted)
+	} else {
+		output := strings.Join(converted, "")
+		fmt.Println(output)
+	}
 }
