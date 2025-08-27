@@ -1,7 +1,9 @@
 # s2m
 
 > [!WARNING]
-> Work in progress, from version [0.5.0](https://github.com/Filip7/s2m/releases/tag/v0.5.0) it works with taking user input
+> Work in progress, currently it can read from stdin and files, also it can save the output to a file
+> BUT, I have not tested it on larger sql files, so there might be performance issues
+> Will work on them
 
 Single to multi line SQL
 
@@ -40,6 +42,20 @@ Use it like this:
 
 ```sh
 ./s2m -f export.sql
+```
+
+To save the output to file, pass `-o` command line flag with the name of the file.
+
+```sh
+./s2m -f export.sql -o output.sql
+```
+
+Also works with standard in
+
+```sh
+./s2m -o output.sql "SELECT * from mail; \
+INSERT into mail(id) values (1); \
+INSERT into mail(id) values (2)"
 ```
 
 ## Do I need this?
