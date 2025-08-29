@@ -1,4 +1,4 @@
-name: Pull request pipeline
+name: pull request pipeline
 
 on:
   pull_request:
@@ -16,5 +16,3 @@ jobs:
 
       - name: Test
         uses: robherley/go-test-action@v0
-        with:
-          omit: "pie"

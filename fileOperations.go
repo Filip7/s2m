@@ -22,7 +22,7 @@ func readFile(filePath string) ([]string, error) {
 			if err.Error() == "EOF" {
 				break
 			}
-			fmt.Println("Error reading file: ", err)
+			fmt.Println("error reading file: ", err)
 			return nil, err
 		}
 
@@ -60,5 +60,5 @@ func saveToFile(filePath string, data []string) {
 		return
 	}
 
-	fmt.Println("data written successfully.")
+	fmt.Println("converted SQL is saved to " + filePath)
 }

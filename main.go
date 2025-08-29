@@ -17,18 +17,7 @@ func main() {
 	parseFlags()
 
 	if cmdLineArgs.fileName != "" {
-		out, err := readFile(cmdLineArgs.fileName)
-		if err != nil {
-			fmt.Println("error happened", err)
-			os.Exit(1)
-		}
-
-		converted := ConvertSingleLineToMultilineSQLFromFile(out)
-		if cmdLineArgs.outputFileName != "" {
-			saveToFile(cmdLineArgs.outputFileName, converted)
-		} else {
-			fmt.Println(strings.Join(converted, ""))
-		}
+		convertDataFromFile()
 		os.Exit(0)
 	}
 
@@ -41,5 +30,20 @@ func main() {
 	} else {
 		output := strings.Join(converted, "")
 		fmt.Println(output)
+	}
+}
+
+func convertDataFromFile() {
+	out, err := readFile(cmdLineArgs.fileName)
+	if err != nil {
+		fmt.Println("error happened", err)
+		os.Exit(1)
+	}
+
+	converted := ConvertSingleLineToMultilineSQLFromFile(out)
+	if cmdLineArgs.outputFileName != "" {
+		saveToFile(cmdLineArgs.outputFileName, converted)
+	} else {
+		fmt.Println(strings.Join(converted, ""))
 	}
 }
