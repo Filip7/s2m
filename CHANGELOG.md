@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.9.0](https://github.com/Filip7/s2m/compare/v0.8.0...v0.9.0) (2025-09-11)
+
+
+### Features
+
+* update to go 1.25 and use experimental garbage collector ([6aa92d4](https://github.com/Filip7/s2m/commit/6aa92d4c9f7981f83cda8a75076c9f98ade451c4))
+
 ## [0.8.0](https://github.com/Filip7/s2m/compare/v0.7.0...v0.8.0) (2025-08-27)
 
 
